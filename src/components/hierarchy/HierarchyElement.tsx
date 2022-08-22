@@ -1,68 +1,51 @@
 import React, { createRef } from "react";
 import CSSType from 'csstype';
 import { Container } from "@mui/system";
-import { Button } from "@mui/material";
+import { Button, SvgIconTypeMap } from "@mui/material";
 import { ChildrenType, ComponentUtility } from "../../utils/ComponentUtility";
 import { HierarchyFolder } from "./HierarchyFolder";
 import { Expansion } from "../Expansion";
 import { Expand, ExpandMore } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 interface Props {
-    children?: React.ReactElement<ChildrenType<HierarchyElement | HierarchyFolder>>
+    icon: React.ReactElement
 }
 
 interface State {
-    expanded: boolean
+    
 }
 
 class HierarchyElement extends React.Component<Props, State> {
-
-    state = {
-        expanded: false
-    }
 
     ref = {
         root: createRef<HTMLDivElement>()
     }
 
-    children = () => ComponentUtility.getChildren(this.props.children);
-
-    toggleExpanded = () => {
-        this.setState({
-            expanded: !this.state.expanded
-        })
-    }
-
     render(): React.ReactNode {
         return(
             <div ref={this.ref.root} style={{
-                display: "inline"
+                display: "inline",
+                position: "relative",
             }}>
                 <div style={{
                     display: "flex",
                 }}>
-                    <motion.div animate={{
-                        rotate: this.state.expanded ? -90 : -90
-                    }} style={{
+                    <Button sx={{
+                        width: "100%",
                         display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        justifyContent: "flex-start"
                     }}>
-                        <ExpandMore/>
-                    </motion.div>
-                    <Button onClick={this.toggleExpanded}>
-                        HierarchyElement
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}>
+                                {this.props.icon}
+                            </div>
+                            Hierarchy Element
                     </Button>
-                </div>
-                
-                <div style={{
-                    position: "relative",
-                    left: "20px"
-                }}>
-                    <Expansion expanded={this.state.expanded}>
-                        {this.children()}
-                    </Expansion>
                 </div>
             </div>
         )

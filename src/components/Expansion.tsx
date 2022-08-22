@@ -20,7 +20,7 @@ class Expansion extends React.Component<Props, State> {
     render(): React.ReactNode {
         return(
             <motion.div animate={{
-                height: this.props.expanded ? undefined : 0
+                height: this.props.expanded ? "auto" : 0
             }} style={{
                 overflow: "hidden"
             }}>
